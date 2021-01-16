@@ -12,6 +12,46 @@ this repo contains few scripts to build base filesystem of slackware for running
 
 这个仓库包含少量脚本用于构建于 WSL 运行所需的 slackware 基础文件系统。
 
+## runtime requires
+
+[Install WSL](https://docs.microsoft.com/zh-cn/windows/wsl/install-win10) first.
+
+先安装 WSL 。
+
+If you don't known what the hell is WSL or just not like big corp such as Microsoft, I can't help.
+
+如果你不知道 WSL 是什么鬼或者不喜欢微软这样的大公司那我帮不了你。(建议炸个荒坂塔出出气。)
+
+after that you will need [lxrunoffline](https://github.com/DDoSolitary/LxRunOffline).
+
+然后你需要安装 lxrunoffline 。
+
+## usage
+
+download recent release then open powershell/cmd console, type commands listed below.
+
+下载最近的发行然后打开 powershell/cmd 命令行，输入下面的命令。
+
+> replace D:\\WSL to anywhere you want.
+>
+> 可以把 D:\\WSL 换成任何你喜欢的地方。
+
+```shell
+lxrunoffline i -n Slackware64-14.2 -d D:\\WSL\\Slackware64-14.2 -f C:\\Users\\yourname\\Downloads\\slackware64-14.2.tar.gz
+```
+
+done!
+
+完事！
+
+There is some extra configurations maybe you want but it's out of the topic.
+
+还有一些额外的配置可能你想要，但这部分内容离题万里就不多说了。
+
+there is some differences between *real* slackware installation and WSL you should be aware but I'm too lazy to write it down here.
+
+还有就是 WSL 运行 slackware 和 *真正的* slackware 安装还是有很多区别的，但我懒得写了。要是发现问题提 issue 谢谢。
+
 ## pre-requires
 
 Currently this script only tested in my slackware64-14.2 VM.
