@@ -1,74 +1,63 @@
-slackware-container
-===============
+# slackware-WSL
 
-build scripts for a slackware container image
+This project is a fork of [slackware-container](https://github.com/vbatts/slackware-container).
 
-Overview
-========
+本项目是[slackware-container](https://github.com/vbatts/slackware-container)的一个fork分支。
 
-The Dockerfile is incomplete so far, since it expects a base image to be used.
-It would be possible and understandable to use the 'busybox' image, and build
-from there, but also to have a mkimage-slackware.sh to build the base image.
+My target is to build an minimun slackware distribution for [Windows Subsystem for Linux](https://docs.microsoft.com/zh-cn/windows/wsl/).
 
-build
-=====
+目标是构建一个在 [适用于 Windows 的 Linux 子系统 (WSL)](https://docs.microsoft.com/zh-cn/windows/wsl/) 上运行的 slackware 发行版。
 
-Currently, using the installer bootstrap, the mkimage-slackware can create an
-ultra-minimal slackware filesystem. (does not even include pkgtools)
+this repo contains few scripts to build base filesystem of slackware for running in wsl environment.
 
-If you have [podman](https://github.com/containers/libpod/tree/master/cmd/podman) installed (the is an [SBo build](https://slackbuilds.org/repository/14.2/system/podman/)):
+这个仓库包含少量脚本用于构建于 WSL 运行所需的 slackware 基础文件系统。
 
-	$> CRT="sudo podman" make image
+## pre-requires
 
-Then you will be able to run:
+Currently this script only tested in my slackware64-14.2 VM.
+So if there is any problem when running this script under another linux distribution,
+try it under slackware64-14.2 or modify script by your self.
 
-	$> sudo podman run -i -t $USER/slackware-base /bin/sh
+目前本脚本仅在 slackware64-14.2 虚拟机下测试过，如果你在其他Linux发行版运行脚本出现问题，请尝试在 Slackware64-14.2 下运行，或者自行修改脚本。
 
-_(this also can be built and run with docker as well. If you build with one, you'll have to push your container build to a container registry before you can pull and run with the other)_
+PS: it should be easy if you known a bit of shell scripting.
 
-(This will be the environment to build out the Dockerfile from)
-(( see http://docs.docker.com/reference/builder/ for more info on that ))
+PS: 如果你懂点shell脚本的话应该不难。
 
+## build
 
-To build alternate versions of slackware, pass gnu-make the RELEASE variable, like:
+just make it.
 
-	$> make image RELEASE=slackware64-13.37 IMG_NAME=$HOME/my_slackware:13.37
+运行 make 命令。
 
-Index
-=====
+```
+make VERSION=14.2
+```
 
-This is this build process used to be the base of 'vbatts/slackware' on the
-http://index.docker.io/
+## TODOs
 
-Just running:
+- [ ] merge get_paths.sh and mkimage-slackware.sh
+- [ ] read, understand, and cleanup mkimage-slackware.sh
+- [ ] maybe rewrite this script with python or put them all in a makefile? seems unnecessary but should be fun.
 
+## Contributing
 
-	$> sudo podman run -i -t vbatts/slackware /bin/sh
- 
- or
-
-	$> sudo docker run -i -t vbatts/slackware /bin/sh
-
-Will pull down this image for testing.
-
-Contributing
-============
 please hack on this and send feedback!
 
-License
-=======
+## License
 
+Copyright (c) 2021, nnnewb <weakptr@outlook.com>
 Copyright (c) 2013, Vincent Batts <vbatts@hashbangbash.com>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met: 
+modification, are permitted provided that the following conditions are met:
 
 1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer. 
+   list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice,
    this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution. 
+   and/or other materials provided with the distribution.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED

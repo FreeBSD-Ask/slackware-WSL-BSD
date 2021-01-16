@@ -1,8 +1,8 @@
 LATEST		:= 14.2
 VERSION		:= $(LATEST)
-VERSIONS	:= 13.0 13.1 13.37 14.0 14.1 14.2 current
+VERSIONS	:= 14.2 current
 NAME		:= slackware
-MIRROR		:= http://slackware.osuosl.org
+MIRROR		:= http://mirrors.ustc.edu.cn/slackware
 ifeq ($(shell uname -m),x86_64)
 ARCH := 64
 else ifeq ($(patsubst i%86,x86,$(shell uname -m)),x86)
@@ -18,14 +18,6 @@ RELEASENAME	?= slackware$(ARCH)
 RELEASE		:= $(RELEASENAME)-$(VERSION)
 CACHEFS		:= /tmp/$(NAME)/$(RELEASE)
 ROOTFS		:= /tmp/rootfs-$(RELEASE)
-#CRT		?= podman
-CRT		?= docker
-
-ifeq ($(CRT), podman)
-CRTCMD         := CMD=/bin/sh
-else
-CRTCMD         := CMD /bin/sh
-endif
 
 image: $(RELEASENAME)-$(LATEST).tar
 
@@ -38,16 +30,15 @@ $(RELEASENAME)-%.tar: mkimage-slackware.sh
 		VERSION="$*" \
 		USER="$(USER)" \
 		BUILD_NAME="$(NAME)" \
+		MIRROR="$(MIRROR)" \
 		bash $<
+	$(MAKE) VERSION=$(VERSION) clean
 
 all: mkimage-slackware.sh
 	for version in $(VERSIONS) ; do \
 		$(MAKE) $(RELEASENAME)-$${version}.tar && \
-		$(MAKE) VERSION=$${version} clean && \
-		$(CRT) import -c '$(CRTCMD)' $(RELEASENAME)-$${version}.tar $(USER)/$(NAME):$${version} && \
-		$(CRT) run -i --rm $(USER)/$(NAME):$${version} /usr/bin/echo "$(USER)/$(NAME):$${version} :: Success." ; \
-	done && \
-	$(CRT) tag $(USER)/$(NAME):$(LATEST) $(USER)/$(NAME):latest
+		$(MAKE) VERSION=$${version} clean; \
+	done
 
 .PHONY: umount
 umount:
