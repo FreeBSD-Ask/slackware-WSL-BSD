@@ -111,6 +111,8 @@ cp -v etc/ld.so.conf mnt/etc
 install_args=""
 if [ -f ./sbin/upgradepkg ] &&  grep -qw terse ./sbin/upgradepkg ; then
 	install_args="--install-new --reinstall --terse"
+elif [ -f ./sbin/installpkg ] && grep -qw terse ./sbin/installpkg ; then
+	install_args="--terse"
 elif [ -f ./usr/lib/setup/installpkg ] &&  grep -qw terse ./usr/lib/setup/installpkg ; then
 	install_args="--terse"
 fi
@@ -133,6 +135,9 @@ do
 	if [ -e ./sbin/upgradepkg ] ; then
 		echo "upgradepkg ${l_pkg}..."
 		PATH=/bin:/sbin:/usr/bin:/usr/sbin chroot . /sbin/upgradepkg --root /mnt ${install_args} ${l_pkg}
+	elif [ -e ./sbin/installpkg ]; then
+		echo "installpkg ${l_pkg}..."
+		PATH=/bin:/sbin:/usr/bin:/usr/sbin chroot . /sbin/installpkg --root /mnt ${install_args} ${l_pkg}
 	else
 		echo "installpkg ${l_pkg}..."
 		PATH=/bin:/sbin:/usr/bin:/usr/sbin chroot . /usr/lib/setup/installpkg --root /mnt ${install_args} ${l_pkg}

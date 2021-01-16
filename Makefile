@@ -19,13 +19,13 @@ RELEASE		:= $(RELEASENAME)-$(VERSION)
 CACHEFS		:= /tmp/$(NAME)/$(RELEASE)
 ROOTFS		:= /tmp/rootfs-$(RELEASE)
 
-image: $(RELEASENAME)-$(LATEST).tar
+all: mkimage-slackware.sh
+	for version in $(VERSIONS) ; do \
+		$(MAKE) $(RELEASENAME)-$${version}.tar.gz && \
+		$(MAKE) VERSION=$${version} clean; \
+	done
 
-arch:
-	@echo $(ARCH)
-	@echo $(RELEASE)
-
-$(RELEASENAME)-%.tar: mkimage-slackware.sh
+$(RELEASENAME)-%.tar.gz: mkimage-slackware.sh
 	sudo \
 		VERSION="$*" \
 		USER="$(USER)" \
@@ -34,11 +34,9 @@ $(RELEASENAME)-%.tar: mkimage-slackware.sh
 		bash $<
 	$(MAKE) VERSION=$(VERSION) clean
 
-all: mkimage-slackware.sh
-	for version in $(VERSIONS) ; do \
-		$(MAKE) $(RELEASENAME)-$${version}.tar && \
-		$(MAKE) VERSION=$${version} clean; \
-	done
+arch:
+	@echo $(ARCH)
+	@echo $(RELEASE)
 
 .PHONY: umount
 umount:
