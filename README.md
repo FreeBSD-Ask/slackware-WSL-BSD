@@ -28,10 +28,18 @@ PS: 如果你懂点shell脚本的话应该不难。
 
 just make it.
 
+> be aware, you need root privilege to mount special filesystem such as /proc and /sys.
+>
+> 注意，你需要 root 权限来挂载特殊文件系统如 /proc 和 /sys 。
+>
+> you *SHOULD* always read source code first before giving super user privilege to unknown script.
+>
+> 你 *应该* 在以超级管理员权限运行未知脚本前阅读脚本源码。
+
 运行 make 命令。
 
 ```
-make VERSION=14.2
+sudo make VERSION=14.2
 ```
 
 ## TODOs
