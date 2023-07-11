@@ -1,5 +1,10 @@
 # slackware-WSL
 
+
+**BSD fork，you need install bash and gmake first**
+
+**这是一个复刻项目，旨在在 FreeBSD 下运行原作者的脚本。你需要提前安装 bash 和 gmake**
+
 This project is a fork of [slackware-container](https://github.com/vbatts/slackware-container).
 
 本项目是[slackware-container](https://github.com/vbatts/slackware-container)的一个fork分支。
